@@ -5,7 +5,14 @@ export type Todo = {
 }
 
 export type TodoStoreState = {
+    loading: boolean
     inventory: Todo[]
+}
+
+export const START_TODO_LOADING = 'START_TODO_LOADING'
+
+type StartTodoLoadingAction = {
+    type: typeof START_TODO_LOADING
 }
 
 export const RECEIVE_TODO_LIST = 'RECEIVE_TODO_LIST'
@@ -22,4 +29,4 @@ type ReceiveTodoAction = {
     payload: Todo
 }
 
-export type TodoActionType = ReceiveTodoListAction | ReceiveTodoAction
+export type TodoActionType = ReceiveTodoListAction | ReceiveTodoAction | StartTodoLoadingAction

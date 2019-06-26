@@ -1,44 +1,31 @@
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import * as Redux from 'redux'
-import { connect} from 'react-redux'
 import './index.scss'
-
-import { AppState } from './store/reducers'
-import { Todo } from './store/types'
-
-type StoreProps = {
-    todos: Todo[]
-}
-
-type DispatchProps = {}
+import { Provider } from 'react-redux'
+import TodoContainer from './containers/todo_container'
+import { applyMiddleware, createStore, compose } from 'redux'
+import thunkMiddleware from 'redux-thunk'
+import { rootReducer } from './store'
 
 type ComponentProps = {}
+type ComponentState = {}
 
-
-type Props = StoreProps & DispatchProps & ComponentProps
-type State = {}
-
-
-const mapStateToProps = (state: AppState): StoreProps => {
-    return {
-        todos: state.todo.inventory
-    }   
-}
-
-const mapDispatchToProps = (dispatch: Redux.Dispatch<any>, componentProps: ComponentProps): DispatchProps => {
-    return {}
-}
-
-class Index extends React.Component<Props, State> {
+class Index extends React.Component<ComponentProps, ComponentState> {
     render() {
-        return <h1>Index Page</h1>
+        return (
+            <section>
+                <h1>Index Page</h1>
+                <TodoContainer />
+            </section>
+        )
     }
 }
 
-const ConnectedIndex = connect<StoreProps, DispatchProps, ComponentProps>(mapStateToProps, mapDispatchToProps)(Index)
+// ? I'd expect that I create store with root reducer, why am I passing it?
+// This is how I would see it, createStore(rootReducer), pass into compose.
+const store = compose(applyMiddleware(thunkMiddleware))(createStore)(rootReducer)
 
 document.addEventListener("DOMContentLoaded", () => {
-    ReactDOM.render(<ConnectedIndex />, document.getElementById("react-application"))
+    ReactDOM.render(<Provider store={store}><Index /></Provider>, document.getElementById("react-application"))
 })
