@@ -4,7 +4,7 @@
   "description": "simple todo application written in React/Redux TypeScript",
   "main": "webpack.config.js",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack --watch"
   },
   "keywords": [
     "typescript",

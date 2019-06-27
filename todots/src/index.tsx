@@ -22,10 +22,12 @@ class Index extends React.Component<ComponentProps, ComponentState> {
     }
 }
 
-// ? I'd expect that I create store with root reducer, why am I passing it?
-// This is how I would see it, createStore(rootReducer), pass into compose.
-const store = compose(applyMiddleware(thunkMiddleware))(createStore)(rootReducer)
+// Wrap createStore with middlewares and produce one final createStore
+const createStoreWithMiddleware = compose(applyMiddleware(thunkMiddleware))(createStore)
 
 document.addEventListener("DOMContentLoaded", () => {
-    ReactDOM.render(<Provider store={store}><Index /></Provider>, document.getElementById("react-application"))
+    ReactDOM.render(
+    <Provider store={createStoreWithMiddleware(rootReducer)}>
+        <Index />
+    </Provider>, document.getElementById("react-application"))
 })

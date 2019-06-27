@@ -4,44 +4,29 @@ import { ThunkDispatch } from 'redux-thunk'
 import { Action } from 'redux'
 
 import { StoreState } from '../store'
-import { Todo } from '../store/todo'
-import { fetchTodoFromServer } from '../store/todo/actions'
+import { Todo, TodoAction } from '../store/todo'
+import { fetchTodoItem, fetchTodoList } from '../store/todo/actions'
 
-// ? I learned this style from Redux tutorials, where they break props into three distinct types.
-// ? Is this good?
 type StoreProps = {
     todos: Todo[]
     loading: boolean
 }
 
 type DispatchProps = {
-    dispatchFetchTodoFromServer: Function
+    dispatchFetchTodoItem: (id: number) => void
+    dispatchFetchTodoList: () => void
 }
 
-type ComponentProps = {
-
-}
+type ComponentProps = {}
 
 type Props = StoreProps & DispatchProps & ComponentProps
+
 type State = {}
-
-const mapStateToProps = (state: StoreState): StoreProps => {
-    return {
-        loading: state.todo.loading,
-        todos: state.todo.inventory
-    }   
-}
-
-// ? Why is it requiring component props, aka ownProps? I want to put in Props.
-const mapDispatchToProps = (dispatch: ThunkDispatch<StoreState, undefined, Action>, ownProps: ComponentProps): DispatchProps => {
-    return {
-        dispatchFetchTodoFromServer: () => dispatch(fetchTodoFromServer())
-    }
-}
 
 class TodoContainer extends React.Component<Props, State> {
     componentDidMount() {
-        this.props.dispatchFetchTodoFromServer()
+        // this.props.dispatchFetchTodoItem(1)
+        this.props.dispatchFetchTodoList()
     }
 
     get loadingStatus() {
@@ -53,11 +38,26 @@ class TodoContainer extends React.Component<Props, State> {
     }
 
     get todos() {
-        return <ol>
-            {this.props.todos.map((todo) => {
-                return <li key={1}>{todo.title}: {todo.body} {todo.completed}</li>
-            })}
-        </ol>
+        return (
+            <section>
+                <h2>Completed</h2>
+                <ul>
+                {
+                    this.props.todos.filter((todo) => todo.completed).map((todo) =>{
+                        return <li key={todo.id}>{todo.id}: {todo.title}</li>
+                    })
+                }
+                </ul>
+                <h2>Incomplete</h2>
+                <ul>
+                {
+                    this.props.todos.filter((todo) => !todo.completed).map((todo) =>{
+                    return <li key={todo.id}>{todo.id}: {todo.title}</li>
+                    })
+                }
+                </ul>
+            </section>
+        )
     }
     
     render() {
@@ -68,6 +68,20 @@ class TodoContainer extends React.Component<Props, State> {
                 {this.todos}
             </section>
         )
+    }
+}
+
+const mapStateToProps = (state: StoreState): StoreProps => {
+    return {
+        loading: state.todo.loading,
+        todos: state.todo.inventory
+    }   
+}
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<StoreState, undefined, TodoAction>, props: ComponentProps): DispatchProps => {
+    return {
+        dispatchFetchTodoItem: (id: number) => dispatch(fetchTodoItem(id)),
+        dispatchFetchTodoList: () => dispatch(fetchTodoList())
     }
 }
 
