@@ -3,19 +3,22 @@ const path = require('path');
 module.exports = {
     mode: "development",
     devtool: "inline-source-map",
-    entry: "./src/index.tsx",
+    entry: "./src/index.jsx",
     output: {
         path: path.join(__dirname, '..', 'public'),
         filename: "index.js"
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx"],
+        extensions: [".js", ".jsx"],
     },
     module: {
         rules: [
             { 
-                test: /\.tsx?$/, 
-                loader: "ts-loader"
+                test: /\.jsx?$/,
+                loader: "babel-loader",
+                query: {
+                    presets: ['@babel/env', '@babel/react']
+                } 
             },
             { 
                 test: /\.scss$/, 

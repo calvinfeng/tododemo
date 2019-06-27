@@ -1,23 +1,24 @@
 {
-  "name": "todots",
+  "name": "todojs",
   "version": "1.0.0",
-  "description": "simple todo application written in React/Redux TypeScript",
+  "description": "simple todo application written in React/Redux JavaScript",
   "scripts": {
     "build": "webpack --watch"
   },
   "keywords": [
-    "typescript",
+    "javascript",
     "react",
-    "redux"
+    "redux",
+    "ES7"
   ],
   "author": "Calvin Feng",
   "license": "ISC",
   "dependencies": {
-    "@types/react": "^16.8.22",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-redux": "^7.1.0",
-    "@types/redux": "^3.6.0",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
     "axios": "^0.19.0",
+    "babel-loader": "^8.0.6",
     "css-loader": "^3.0.0",
     "node-sass": "^4.12.0",
     "react": "^16.8.6",
@@ -27,8 +28,6 @@
     "redux-thunk": "^2.3.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "ts-loader": "^6.0.4",
-    "typescript": "^3.5.2",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
