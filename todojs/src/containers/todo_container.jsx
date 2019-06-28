@@ -1,29 +1,8 @@
-import * as React from 'react'
-import { connect} from 'react-redux'
-import { ThunkDispatch } from 'redux-thunk'
-import { Action } from 'redux'
-
-import { StoreState } from '../store'
-import { Todo, TodoAction } from '../store/todo'
+import React from 'react'
+import { connect } from 'react-redux'
 import { fetchTodoItem, fetchTodoList } from '../store/todo/actions'
 
-type StoreProps = {
-    todos: Todo[]
-    loading: boolean
-}
-
-type DispatchProps = {
-    dispatchFetchTodoItem: (id: number) => void
-    dispatchFetchTodoList: () => void
-}
-
-type ComponentProps = {}
-
-type Props = StoreProps & DispatchProps & ComponentProps
-
-type State = {}
-
-class TodoContainer extends React.Component<Props, State> {
+class TodoContainer extends React.Component {
     get loadingStatus() {
         if (this.props.loading) {
             return <p>loading todos</p>
@@ -54,12 +33,11 @@ class TodoContainer extends React.Component<Props, State> {
             </section>
         )
     }
-    
+
     componentDidMount() {
-        // this.props.dispatchFetchTodoItem(1)
         this.props.dispatchFetchTodoList()
     }
-    
+
     render() {
         return (
             <section>
@@ -71,19 +49,18 @@ class TodoContainer extends React.Component<Props, State> {
     }
 }
 
-const mapStateToProps = (state: StoreState): StoreProps => {
+const mapStateToProps = (state) => {
     return {
         loading: state.todo.loading,
         todos: state.todo.inventory
-    }   
+    }
 }
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<StoreState, undefined, TodoAction>, props: ComponentProps): DispatchProps => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        dispatchFetchTodoItem: (id: number) => dispatch(fetchTodoItem(id)),
+        dispatchFetchTodoItem: (id) => dispatch(fetchTodoItem(id)),
         dispatchFetchTodoList: () => dispatch(fetchTodoList())
     }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoContainer)
-

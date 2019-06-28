@@ -9,7 +9,6 @@ export const fetchTodoItem = (id: number) => async (dispatch: ThunkDispatch<Stor
 
     try {
         const res: AxiosResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos/${id}`)
-        console.log(res.data)
         dispatch({
             type: RECEIVE_TODO_ITEM,
             payload: res.data
@@ -30,7 +29,6 @@ export const fetchTodoList = () => async (dispatch: ThunkDispatch<StoreState, un
 
     try {
         const res: AxiosResponse = await axios.get(`https://jsonplaceholder.typicode.com/todos`)
-        console.log(res.data)
         dispatch({
             type: RECEIVE_TODO_LIST,
             payload: res.data

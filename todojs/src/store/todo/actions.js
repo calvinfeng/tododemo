@@ -1,4 +1,5 @@
 import axios from 'axios'
+import '@babel/polyfill'
 
 export const START_TODO_LOADING = 'START_TODO_LOADING'
 export const STOP_TODO_LOADING = 'STOP_TODO_LOADING'

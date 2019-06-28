@@ -1,9 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import thunkMiddleware from 'redux-thunk'
-import { applyMiddleware, createStore, compose } from 'redux';
-import { rootReducer } from './store'
 import { Provider } from 'react-redux'
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunkMiddleware from 'redux-thunk'
+
+import { rootReducer } from './store'
+import TodoContainer from './containers/todo_container'
 import './index.scss'
 
 class Index extends React.Component {
@@ -11,6 +13,7 @@ class Index extends React.Component {
         return (
             <section>
                 <h1>Index Page</h1>
+                <TodoContainer />
             </section>
         )
     }
